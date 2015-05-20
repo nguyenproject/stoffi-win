@@ -63,6 +63,7 @@ namespace Stoffi.Player.GUI.Controls.ControlPanel
 		private Hashtable shortcutButtons = new Hashtable();
 		private Hashtable shortcutCheckBoxes = new Hashtable();
 		private Label globalLabel = new Label();
+		private bool initialized = false;
 
 		#endregion
 
@@ -74,7 +75,6 @@ namespace Stoffi.Player.GUI.Controls.ControlPanel
 		public Shortcuts()
 		{
 			InitializeComponent();
-			//InitShortcuts();
 		}
 		#endregion
 
@@ -115,9 +115,9 @@ namespace Stoffi.Player.GUI.Controls.ControlPanel
 			categories[1, 1] = "ShortcutMainWindowTitle";
 			categories[1, 2] = "ShortcutMainWindowText";
 
-			categories[2, 0] = "MediaManager.Commands";
-			categories[2, 1] = "ShortcutMediaManager.CommandsTitle";
-			categories[2, 2] = "ShortcutMediaManager.CommandsText";
+			categories[2, 0] = "MediaCommands";
+			categories[2, 1] = "ShortcutMediaCommandsTitle";
+			categories[2, 2] = "ShortcutMediaCommandsText";
 
 			categories[3, 0] = "Track";
 			categories[3, 1] = "ShortcutTrackTitle";
@@ -165,7 +165,7 @@ namespace Stoffi.Player.GUI.Controls.ControlPanel
 				for (j = 0; j < profile.Shortcuts.Count; j++)
 					g.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
-				if (categories[i, 0] == "MediaManager.Commands")
+				if (categories[i, 0] == "MediaCommands")
 				{
 					globalLabel.Content = U.T("ShortcutGlobal");
 					globalLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
@@ -200,7 +200,7 @@ namespace Stoffi.Player.GUI.Controls.ControlPanel
 					Grid.SetRow(b, j);
 					g.Children.Add(b);
 
-					if (categories[i, 0] == "MediaManager.Commands")
+					if (categories[i, 0] == "MediaCommands")
 					{
 						CheckBox cb = new CheckBox() { IsChecked = sc.IsGlobal, Name = b.Name, ToolTip = U.T("ShortcutGlobal", "ToolTip") };
 						cb.VerticalAlignment = System.Windows.VerticalAlignment.Center;
@@ -231,6 +231,7 @@ namespace Stoffi.Player.GUI.Controls.ControlPanel
 				ShortcutProfile.Items.Add(new ComboBoxItem() { Content = p.Name });
 			}
 			ShortcutProfile.SelectedIndex = sel;
+			initialized = true;
 		}
 
 		/// <summary>
@@ -307,6 +308,8 @@ namespace Stoffi.Player.GUI.Controls.ControlPanel
 		{
 			if (System.Windows.Forms.VisualStyles.VisualStyleInformation.DisplayName == "")
 				Title.Style = (Style)FindResource("ClassicControlPanelTitleStyle");
+			if (!initialized)
+				InitShortcuts();
 		}
 
 		/// <summary>
@@ -512,7 +515,7 @@ namespace Stoffi.Player.GUI.Controls.ControlPanel
 				b.Content = sc.Keys == "" ? U.T("ShortcutNotUsed") : sc.Keys;
 				b.FontStyle = sc.Keys == "" ? FontStyles.Italic : FontStyles.Normal;
 
-				if (sc.Category == "MediaManager.Commands")
+				if (sc.Category == "MediaCommands")
 				{
 					CheckBox cb = shortcutCheckBoxes[sc.Category + "_" + sc.Name.Replace(" ", "_")] as CheckBox;
 					cb.IsChecked = sc.IsGlobal;

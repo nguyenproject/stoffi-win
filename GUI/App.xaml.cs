@@ -121,7 +121,7 @@ namespace Stoffi.Player.GUI
 				new XmlLanguageDictionary(Path.Combine(languageFolder, "hu-HU.xml")));
 
 			string lang = SettingsManager.Language;
-			if (lang == null)
+			if (String.IsNullOrWhiteSpace(lang))
 				lang = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
 			CultureInfo ci = CultureInfo.GetCultureInfo(lang);
 			U.L(LogLevel.Debug, "APP", String.Format("Setting culture: {0} ({1})", ci.TwoLetterISOLanguageName, ci.IetfLanguageTag));

@@ -732,7 +732,6 @@ namespace Stoffi.Player.GUI.Windows
 					{
 						Data = path,
 						Type = SourceType.File,
-						Icon = "pack://application:,,,/Images/Icons/FileAudio.ico",
 						Include = true
 					}, FinishOpen, param);
 					return;
@@ -2559,7 +2558,7 @@ namespace Stoffi.Player.GUI.Windows
 
 			System.Windows.Forms.Application.EnableVisualStyles();
 
-			if (!SettingsManager.FastStart)
+			if (!SettingsManager.FastStart && !String.IsNullOrWhiteSpace(SettingsManager.WinState))
 				WindowState = (WindowState)Enum.Parse(typeof(WindowState), SettingsManager.WinState);
 
 			kListener.KeyDown += new RawKeyEventHandler(KListener_KeyDown);
@@ -3304,7 +3303,6 @@ namespace Stoffi.Player.GUI.Windows
 						{
 							Data = track.Path,
 							Ignore = true,
-							Icon = "pack://application:,,,/Images/Icons/FileAudio.ico",
 							Type = SourceType.File
 						});
 				}
@@ -4618,7 +4616,6 @@ namespace Stoffi.Player.GUI.Windows
 					s.Data = dialog.FileName;
 					s.Type = SourceType.File;
 					s.Include = true;
-					s.Icon = "pack://application:,,,/Images/Icons/FileAudio.ico";
 					Files.AddSource(s);
 				}
 			}
@@ -4647,7 +4644,6 @@ namespace Stoffi.Player.GUI.Windows
 					s.Data = dialog.SelectedPath;
 					s.Type = SourceType.Folder;
 					s.Include = true;
-					s.Icon = "pack://application:,,,/Images/Icons/Folder.ico";
 					Files.AddSource(s);
 				}
 			}
@@ -4676,7 +4672,6 @@ namespace Stoffi.Player.GUI.Windows
 					s.Data = dialog.FileName;
 					s.Type = SourceType.File;
 					s.Ignore = true;
-					s.Icon = "pack://application:,,,/Images/Icons/FileAudio.ico";
 					Files.AddSource(s);
 				}
 			}
@@ -4705,7 +4700,6 @@ namespace Stoffi.Player.GUI.Windows
 					s.Data = dialog.SelectedPath;
 					s.Type = SourceType.Folder;
 					s.Ignore = true;
-					s.Icon = "pack://application:,,,/Images/Icons/Folder.ico";
 					Files.AddSource(s);
 				}
 			}
