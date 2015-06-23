@@ -1,5 +1,5 @@
-Welcome to Stoffi
-=================
+Welcome to Stoffi for Windows
+=============================
 
 ![Screenshot](https://www.stoffiplayer.com/assets/us/start.png)
 
@@ -28,7 +28,7 @@ Clone the repository:
 
     git clone https://github.com/simplare/stoffi-player-win.git
     
-The initialize the [Stoffi Core](https://github.com/simplare/stoffi-player-core) submodule:
+Then initialize the [Stoffi Core](https://github.com/simplare/stoffi-player-core) submodule:
 
     cd Core
     git submodule init
