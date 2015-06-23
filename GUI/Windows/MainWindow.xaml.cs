@@ -1798,20 +1798,24 @@ namespace Stoffi.Player.GUI.Windows
 
 				Dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate()
 				{
+					var orgWidth = ControlPanel.Services.Width;
+					var orgHeight = ControlPanel.Services.Height;
+
+					// flash services panel in main window (this forces the browser to load)
+					ControlPanel.Services.Width = 1;
+					ControlPanel.Services.Height = 1;
 					ControlPanel.Container.Children.Remove(ControlPanel.Services);
 					ControlPanel.Services.Visibility = Visibility.Visible;
 					if (!ContentContainer.Children.Contains(ControlPanel.Services))
 						ContentContainer.Children.Add(ControlPanel.Services);
-				}));
 
-				//Thread.Sleep(50);
-
-				Dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate()
-				{
+					// restore services panel into its original place
 					ContentContainer.Children.Remove(ControlPanel.Services);
 					ControlPanel.Services.Visibility = Visibility.Collapsed;
 					if (!ControlPanel.Container.Children.Contains(ControlPanel.Services))
 						ControlPanel.Container.Children.Add(ControlPanel.Services);
+					ControlPanel.Services.Width = orgWidth;
+					ControlPanel.Services.Height = orgHeight;
 				}));
 
 				ControlPanel.General.RestartClick += new RoutedEventHandler(UpgradeButton_Click);
@@ -2551,8 +2555,8 @@ namespace Stoffi.Player.GUI.Windows
 			taskbarPlay.Click += TaskbarPlayPause_Click;
 			taskbarNext = new ThumbnailToolBarButton(Properties.Resources.Next, U.T("TaskbarNext"));
 			taskbarNext.Click += TaskbarNext_Click;
-			TaskbarManager.Instance.ThumbnailToolBars.AddButtons(
-				new WindowInteropHelper(this).Handle, taskbarPrev, taskbarPlay, taskbarNext);
+			//TaskbarManager.Instance.ThumbnailToolBars.AddButtons(
+			//    new WindowInteropHelper(this).Handle, taskbarPrev, taskbarPlay, taskbarNext);
 
 			#endregion
 
