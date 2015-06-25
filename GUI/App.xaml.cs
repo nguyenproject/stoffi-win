@@ -73,7 +73,7 @@ namespace Stoffi.Player.GUI
 		{
 			var fullPath = Uri.UnescapeDataString((new Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath).Replace("/", @"\");
 			U.Initialize(fullPath, SynchronizationContext.Current, LogLevel.Debug);
-			U.L(LogLevel.Information, "APP", "Starting up");
+			U.L(LogLevel.Information, "APP", "Starting up Stoffi Music Player");
 
 			string a = Assembly.GetExecutingAssembly().CodeBase;
 			Uri b = new Uri(a);
@@ -204,12 +204,15 @@ namespace Stoffi.Player.GUI
 				}
 			}
 
+			U.L(LogLevel.Debug, "App", "Checking if platform is supported");
 			if (!Microsoft.WindowsAPICodePack.Taskbar.TaskbarManager.IsPlatformSupported)
 			{
 				MessageBox.Show(U.T("MessageOldWindows", "Message"), U.T("MessageOldWindows", "Title"), MessageBoxButton.OK, MessageBoxImage.Error);
 				Application.Current.Shutdown();
 				return;
 			}
+
+			U.L(LogLevel.Debug, "App", "App is constructed, starting up...");
 		}
 
 		#endregion
@@ -577,16 +580,6 @@ namespace Stoffi.Player.GUI
 		#endregion
 
 		#region Event handlers
-
-		/// <summary>
-		/// Called when the application is started
-		/// </summary>
-		/// <param name="sender">Sender of the event</param>
-		/// <param name="e">Arguments of the event</param>
-		private void App_Startup(object sender, StartupEventArgs e)
-		{
-			U.L(LogLevel.Information, "APP", "Starting Stoffi Music Player");
-		}
 
 		/// <summary>
 		/// Called when the application is closed
