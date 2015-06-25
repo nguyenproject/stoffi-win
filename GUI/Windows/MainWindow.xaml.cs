@@ -1245,6 +1245,8 @@ namespace Stoffi.Player.GUI.Windows
 		/// </summary>
 		private void InitGUI()
 		{
+			U.L(LogLevel.Debug, "Main", "Initializing the GUI");
+
 			// create glass effect
 			RefreshGlassEffect();
 
@@ -1584,6 +1586,8 @@ namespace Stoffi.Player.GUI.Windows
 			InitVideo();
 
 			timer = new Timer(obj => { FirstRun();  InitControlPanel(true); }, null, 1000, Timeout.Infinite);
+
+			U.L(LogLevel.Debug, "Main", "GUI finished initializing");
 		}
 
 		private void FirstRun()
