@@ -1,3 +1,5 @@
+[![Build Status]( https://ci.appveyor.com/api/projects/status/github/simplare/stoffi-player-win?branch=master&svg=true)](https://ci.appveyor.com/project/ephracis/stoffi-player-win)
+
 Welcome to Stoffi for Windows
 =============================
 
