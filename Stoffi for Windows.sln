@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stoffi on Windows", "GUI\Stoffi on Windows.csproj", "{58D25A22-7243-4D55-84DC-C545C079DC03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stoffi for Windows", "GUI\Stoffi for Windows.csproj", "{58D25A22-7243-4D55-84DC-C545C079DC03}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{C9753DF4-362B-4456-BC20-128F8EF08F90}"
 EndProject
