@@ -2533,6 +2533,15 @@ namespace Stoffi.Player.GUI.Windows
 		{
 			U.L(LogLevel.Debug, "MAIN", "Started load");
 
+			var w = SettingsManager.WinWidth;
+			var h = SettingsManager.WinHeight;
+			var l = SettingsManager.WinLeft;
+			var t = SettingsManager.WinTop;
+			Width = w;
+			Height = h;
+			Left = l;
+			Top = t;
+
 			// check if we should start minimized
 			bool hide = false;
 			if (SettingsManager.FastStart)
@@ -4975,6 +4984,8 @@ namespace Stoffi.Player.GUI.Windows
 		/// <param name="e">The event data</param>
 		private void ChangeSize(object sender, SizeChangedEventArgs e)
 		{
+			if (!IsLoaded)
+				return;
 			SettingsManager.WinWidth = ActualWidth;
 			SettingsManager.WinHeight = ActualHeight;
 			PlaybackControls.Compress(ActualWidth, MinWidth);
@@ -4987,6 +4998,8 @@ namespace Stoffi.Player.GUI.Windows
 		/// <param name="e">The event data</param>
 		private void ChangePos(object sender, EventArgs e)
 		{
+			if (!IsLoaded)
+				return;
 			SettingsManager.WinTop = Top;
 			SettingsManager.WinLeft = Left;
 		}
