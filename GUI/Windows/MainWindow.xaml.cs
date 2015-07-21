@@ -2539,8 +2539,10 @@ namespace Stoffi.Player.GUI.Windows
 			var t = SettingsManager.WinTop;
 			Width = w;
 			Height = h;
-			Left = l;
-			Top = t;
+			if (l != -1)
+				Left = l;
+			if (t != -1)
+				Top = t;
 
 			// check if we should start minimized
 			bool hide = false;
