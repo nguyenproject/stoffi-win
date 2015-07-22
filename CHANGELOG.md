@@ -3,7 +3,14 @@ All notable changes to [stoffi-player-win](https://github.com/simplare/stoffi-pl
 From version 1.50.0 and onward, this project adheres to [Semantic Versioning](http://semver.org/).
 This change log is based on [Keep a CHANGELOG](http://keepachangelog.com/).
 
-## Unreleased (han)
+## Unreleased
+### Added
+- Universal Windows app
+
+### Removed
+- Windows 7 player
+
+## 1.50 (han) - YANKED
 ### Added
 - Stream from [Jamendo](http://jamendo.com).
 - New views: icon grid, content, icon list.
