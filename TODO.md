@@ -1,0 +1,10 @@
+- Change color in title bar
+- Save navigation between sessions
+- Coded UI tests
+- Dashboard
+- Playlists
+- Music
+- Timeline
+- Settings
+- About
+- Privacy

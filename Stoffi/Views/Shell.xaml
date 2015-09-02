@@ -1,0 +1,86 @@
+<Page x:Class="Stoffi.Win.Views.Shell"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Controls="using:Template10.Controls"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Stoffi.Win.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:fa="using:FontAwesome.UWP"
+      xmlns:views="using:Stoffi.Win.Views"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
+    <RelativePanel>
+
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu"
+                                RelativePanel.AlignTopWithPanel="True"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.AlignLeftWithPanel="True"
+                                RelativePanel.AlignBottomWithPanel="True">
+
+            <Controls:HamburgerMenu.PrimaryButtons>
+                <Controls:HamburgerButtonInfo PageType="views:DashboardPage">
+                    <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <SuppressNavigationTransitionInfo />
+                    </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="AreaChart" Width="48" Height="48"/>
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Dashboard" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+                <Controls:HamburgerButtonInfo PageType="views:PlaylistsPage">
+                    <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <SuppressNavigationTransitionInfo />
+                    </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="List" Width="48" Height="48"/>
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Playlists" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+                <Controls:HamburgerButtonInfo PageType="views:MusicPage">
+                    <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <SuppressNavigationTransitionInfo />
+                    </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="Music" Width="48" Height="48"/>
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Music" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+                <Controls:HamburgerButtonInfo PageType="views:TimelinePage">
+                    <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <SuppressNavigationTransitionInfo />
+                    </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="ClockOutline" Width="48" Height="48"/>
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Timeline" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+            </Controls:HamburgerMenu.PrimaryButtons>
+
+            <Controls:HamburgerMenu.SecondaryButtons>
+                <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0"
+                                          PageType="views:SettingsPage">
+                    <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <SuppressNavigationTransitionInfo />
+                    </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="Cogs" Width="48" Height="48"/>
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+            </Controls:HamburgerMenu.SecondaryButtons>
+
+        </Controls:HamburgerMenu>
+
+        <views:PlaybackControl x:Name="Playback"
+                               Margin="48,0,0,0"
+                               Height="48"
+                               RelativePanel.AlignTopWithPanel="True"
+                               RelativePanel.AlignRightWithPanel="True"
+                               RelativePanel.AlignLeftWithPanel="True"/>
+        
+    </RelativePanel>
+
+</Page>
+
