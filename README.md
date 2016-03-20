@@ -1,4 +1,4 @@
-[![Build Status]( https://ci.appveyor.com/api/projects/status/github/simplare/stoffi-win?branch=develop&svg=true)](https://ci.appveyor.com/project/ephracis/stoffi-win)
+[![Build status](https://ci.appveyor.com/api/projects/status/w4pfwhs2rgv2yj05?svg=true)](https://ci.appveyor.com/project/ephracis/stoffi-win)
 
 Welcome to Stoffi for Windows
 =============================
