@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win.UI", "Win.UI\Win.UI.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core\Core.csproj", "{34D34064-25B3-49D1-9879-AF3076FB3A26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "Core\Core.Tests.Unit\Core.Tests.csproj", "{E8EB7570-6440-442E-8FAC-B7316C2150D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "Core\Core.Tests\Core.Tests.csproj", "{E8EB7570-6440-442E-8FAC-B7316C2150D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win.Tests.Unit", "Win.Tests.Unit\Win.Tests.Unit.csproj", "{139F8970-7DB4-429D-A892-935EF5073B14}"
 EndProject
