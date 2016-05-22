@@ -1,4 +1,4 @@
-version: 2.0.0-beta+{build}
+version: 2.0.0-beta.1+{build}
 branches:
   only:
   - master
@@ -13,7 +13,7 @@ install:
 - git submodule update --init --recursive
 before_build:
 - nuget restore
-- nuget restore Core\Core\project.json
+- nuget restore Core\Core.sln
 build:
   project: Stoffi.sln
 notifications:
