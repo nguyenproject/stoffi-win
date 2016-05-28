@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Stoffi.Win.ViewModels
+namespace Stoffi.Win.Logic.ViewModels
 {
     public class TimelinePageViewModel : ViewModelBase
     {

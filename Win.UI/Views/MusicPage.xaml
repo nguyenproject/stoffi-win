@@ -10,7 +10,7 @@
       xmlns:local="using:Stoffi.Win.Views"
       xmlns:m="using:Stoffi.Core.Models"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Stoffi.Win.ViewModels" 
+      xmlns:vm="using:Stoffi.Win.Logic.ViewModels" 
       mc:Ignorable="d" 
       xmlns:fa="using:FontAwesome.UWP"
       Margin="0,48,0,0"

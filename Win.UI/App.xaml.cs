@@ -1,31 +1,35 @@
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using Stoffi.Services;
+using Stoffi.Win.Logic.Services;
 using Windows.ApplicationModel.Activation;
 using Template10.Controls;
 using Template10.Common;
-using System;
-using System.Linq;
+using Template10.Utils;
+using Microsoft.Practices.Unity;
+using Stoffi.Core.Services;
 
 namespace Stoffi.Win
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki
 
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : BootStrapper
     {
         public App()
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
 
+            #region IoC
+            Container.Instance.RegisterInstance<SettingsStorage>(new SettingsStorage());
+            Container.Instance.RegisterType<ISettingsStorage, SettingsStorage>();
+            Container.Instance.RegisterType<ISettingsService, Core.Services.SettingsService>();
+            #endregion
+
             #region App settings
-
-            var settings = SettingsService.Instance;
-            RequestedTheme = settings.AppTheme;
-            CacheMaxDuration = settings.CacheMaxDuration;
-            ShowShellBackButton = settings.UseShellBackButton;
-
+            var settings = Container.Instance.Resolve<ISettingsService>();
+            var theme = settings.Read<ApplicationTheme>("theme", ApplicationTheme.Dark);
+            RequestedTheme = theme;
             #endregion
         }
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Stoffi.Core.Models;
 using System.Threading.Tasks;
-using Stoffi.Win.ViewModels;
+using Stoffi.Win.Logic.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Stoffi.Win.Tests.Unit.Mocks;
 using System;

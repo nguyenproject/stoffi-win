@@ -4,12 +4,11 @@
       xmlns:Behaviors="using:Template10.Behaviors"
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:c="using:Stoffi.Converters"
       xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Stoffi.Win.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Stoffi.Win.ViewModels" mc:Ignorable="d">
+      xmlns:vm="using:Stoffi.Win.Logic.ViewModels" mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:SettingsPageViewModel x:Name="ViewModel" />
