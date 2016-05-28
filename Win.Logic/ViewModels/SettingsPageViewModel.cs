@@ -16,44 +16,30 @@ namespace Stoffi.Win.Logic.ViewModels
 
     public class SettingsPartViewModel : ViewModelBase
     {
-        Services.SettingsService settings;
-        ISettingsService settings2;
+        ISettingsService settings;
 
         public SettingsPartViewModel()
         {
-            settings2 = Container.Instance.Resolve<ISettingsService>();
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                // designtime
-            }
-            else
-            {
-                settings = Services.SettingsService.Instance;
-            }
+            settings = Container.Instance.Resolve<ISettingsService>();
         }
 
-        public bool UseShellBackButton
-        {
-            get { return settings.UseShellBackButton; }
-            set { settings.UseShellBackButton = value; base.RaisePropertyChanged(); }
-        }
-
+        /// <summary>
+        /// Gets or sets whether or not to use the Light theme.
+        /// </summary>
         public bool UseLightThemeButton
         {
             get
             {
-                var theme = settings2.Read<ApplicationTheme>("theme", ApplicationTheme.Dark);
+                var theme = settings.Read<ApplicationTheme>("AppTheme", ApplicationTheme.Dark).Result;
                 return theme.Equals(ApplicationTheme.Light);
             }
             set
             {
                 ApplicationTheme theme = value ? ApplicationTheme.Light : ApplicationTheme.Dark;
-                settings2.Write<ApplicationTheme>("theme", theme);
+                settings.Write<ApplicationTheme>("AppTheme", theme).Wait();
                 (Window.Current.Content as FrameworkElement).RequestedTheme = theme.ToElementTheme();
                 base.RaisePropertyChanged();
             }
-            //get { return settings.AppTheme.Equals(ApplicationTheme.Light); }
-            //set { settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; base.RaisePropertyChanged(); }
         }
 
         private string _BusyText = "Please wait...";

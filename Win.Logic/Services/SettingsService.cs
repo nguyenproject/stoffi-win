@@ -4,6 +4,9 @@ using Template10.Common;
 using Template10.Utils;
 using Windows.UI.Xaml;
 using Template10.Services.SettingsService;
+using Template10.Services.FileService;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Stoffi.Win.Logic.Services
 {
@@ -21,13 +24,45 @@ namespace Stoffi.Win.Logic.Services
         ISettingsHelper helper;
 
         /// <summary>
+        /// A list of setting keys that are large in size and thus needs
+        /// to be saved to file instead of the settings storage of UWP.
+        /// </summary>
+        /// <remarks>
+        /// The settings storage of UWP has a 6k limit. Large settings needs to
+        /// be saved to file instead.
+        /// </remarks>
+        public List<string> LargeSettings { get; set; }
+
+        /// <summary>
         /// The strategy to use for storing settings.
         /// </summary>
         public SettingsStrategies Strategy { get; set; }
 
+        /// <summary>
+        /// Gets the storage strategy that corresponds to the
+        /// current settings strategy.
+        /// </summary>
+        public StorageStrategies StorageStrategy
+        {
+            get
+            {
+                switch (Strategy)
+                {
+                    case SettingsStrategies.Local:
+                        return StorageStrategies.Local;
+                    case SettingsStrategies.Temp:
+                        return StorageStrategies.Temporary;
+                    case SettingsStrategies.Roam:
+                    default:
+                        return StorageStrategies.Roaming;
+                }
+            }
+        }
+
         public SettingsStorage(SettingsStrategies strategy = SettingsStrategies.Roam)
         {
             helper = new SettingsHelper();
+            LargeSettings = new List<string>();
             Strategy = strategy;
         }
 
@@ -36,10 +71,11 @@ namespace Stoffi.Win.Logic.Services
         /// </summary>
         /// <param name="name">The name of the record</param>
         /// <returns>True if the setting exists, false otherwise</returns>
-        public bool Exists(string name)
+        public async Task<bool> Exists(string name)
         {
-            helper.Exists(name, Strategy);
-            throw new NotImplementedException();
+            if (!LargeSettings.Contains(name))
+                return helper.Exists(name, Strategy);
+            return await FileHelper.FileExistsAsync(name, StorageStrategy);
         }
 
         /// <summary>
@@ -49,18 +85,25 @@ namespace Stoffi.Win.Logic.Services
         /// <param name="name">The name of the setting</param>
         /// <param name="otherwise">The default value to return if the setting is not found</param>
         /// <returns>The setting if found, `otherwise` if not</returns>
-        public T Read<T>(string name, T otherwise)
+        public async Task<T> Read<T>(string name, T otherwise)
         {
-            return helper.Read<T>(name, otherwise, Strategy);
+            if (!LargeSettings.Contains(name))
+                return helper.Read<T>(name, otherwise, Strategy);
+            var value = await FileHelper.ReadFileAsync<T>(name, StorageStrategy);
+            return value == null ? otherwise : value;
         }
 
         /// <summary>
         /// Remove a given setting.
         /// </summary>
         /// <param name="name">The name of the setting</param>
-        public void Remove(string name)
+        public async Task Remove(string name)
         {
-            helper.Remove(name, Strategy);
+            if (!LargeSettings.Contains(name))
+                helper.Remove(name, Strategy);
+            else
+                await FileHelper.DeleteFileAsync(name, StorageStrategy);
+            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -69,9 +112,12 @@ namespace Stoffi.Win.Logic.Services
         /// <typeparam name="T">The type of the setting</typeparam>
         /// <param name="name">The name of the setting</param>
         /// <param name="value">The value of the setting</param>
-        public void Write<T>(string name, T value)
+        public async Task Write<T>(string name, T value)
         {
-            helper.Write<T>(name, value, Strategy);
+            if (!LargeSettings.Contains(name))
+                helper.Write<T>(name, value, Strategy);
+            else
+                await FileHelper.WriteFileAsync<T>(name, value, StorageStrategy);
         }
     }
 
