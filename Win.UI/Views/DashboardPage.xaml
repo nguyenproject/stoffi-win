@@ -8,7 +8,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Stoffi.Win.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Stoffi.Win.ViewModels" mc:Ignorable="d">
+      xmlns:vm="using:Stoffi.Win.Logic.ViewModels" mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:DashboardPageViewModel x:Name="ViewModel" />

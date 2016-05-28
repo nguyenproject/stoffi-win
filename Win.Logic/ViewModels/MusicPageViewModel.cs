@@ -10,7 +10,7 @@ using Stoffi.Core.Models;
 using Stoffi.Core.Services;
 using Windows.UI.Xaml.Controls;
 
-namespace Stoffi.Win.ViewModels
+namespace Stoffi.Win.Logic.ViewModels
 {
     /// <summary>
     /// Drives the view showing lists of songs.

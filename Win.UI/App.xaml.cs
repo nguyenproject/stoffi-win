@@ -1,31 +1,38 @@
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using Stoffi.Services;
+using Stoffi.Win.Logic.Services;
 using Windows.ApplicationModel.Activation;
 using Template10.Controls;
 using Template10.Common;
-using System;
-using System.Linq;
+using Microsoft.Practices.Unity;
+using Stoffi.Core.Services;
+using Windows.ApplicationModel;
 
 namespace Stoffi.Win
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki
 
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : BootStrapper
     {
         public App()
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
+            EnableAutoRestoreAfterTerminated = false;
+
+            #region IoC
+            var settingsStorage = new SettingsStorage();
+            settingsStorage.LargeSettings.Add("NavigationState");
+            Container.Instance.RegisterInstance<SettingsStorage>(settingsStorage);
+            Container.Instance.RegisterType<ISettingsStorage, SettingsStorage>();
+            Container.Instance.RegisterType<ISettingsService, Core.Services.SettingsService>();
+            #endregion
 
             #region App settings
-
-            var settings = SettingsService.Instance;
-            RequestedTheme = settings.AppTheme;
-            CacheMaxDuration = settings.CacheMaxDuration;
-            ShowShellBackButton = settings.UseShellBackButton;
-
+            var settings = Container.Instance.Resolve<ISettingsService>();
+            var theme = settings.Read<ApplicationTheme>("AppTheme", ApplicationTheme.Dark).Result;
+            RequestedTheme = theme;
             #endregion
         }
 
@@ -48,10 +55,23 @@ namespace Stoffi.Win
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // long-running startup tasks go here
-
-            NavigationService.Navigate(typeof(Views.DashboardPage));
+            if (startKind == StartKind.Launch)
+            {
+                var settings = Container.Instance.Resolve<ISettingsService>();
+                var navState = await settings.Read<string>("NavigationState", "");
+                if (string.IsNullOrWhiteSpace(navState))
+                    NavigationService.Navigate(typeof(Views.DashboardPage));
+                else
+                    NavigationService.NavigationState = navState;
+            }
             await Task.CompletedTask;
+        }
+
+        public override Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunchActivated)
+        {
+            var settings = Container.Instance.Resolve<ISettingsService>();
+            settings.Write<string>("NavigationState", NavigationService.NavigationState);
+            return base.OnSuspendingAsync(s, e, prelaunchActivated);
         }
     }
 }
