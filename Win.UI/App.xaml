@@ -8,14 +8,7 @@
                      x:Class="Stoffi.Win.App">
 
     <common:BootStrapper.Resources>
-        <ResourceDictionary Source="Styles\Custom.xaml" >
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles\Custom.xaml"/>
-                <!--<ResourceDictionary>
-                    <ViewModels:JsonViewModel x:Key="json" d:IsDataSource="True"/>
-                </ResourceDictionary>-->
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="Styles\Custom.xaml" />
     </common:BootStrapper.Resources>
 
 </common:BootStrapper>

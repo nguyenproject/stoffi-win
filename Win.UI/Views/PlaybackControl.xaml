@@ -5,14 +5,66 @@
     xmlns:local="using:Stoffi.Win.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Stoffi.Win.Logic.ViewModels"
+    xmlns:fa="using:FontAwesome.UWP"
+    RequestedTheme="Dark"
     mc:Ignorable="d"
     d:DesignHeight="48"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    Foreground="White">
+
+    <UserControl.DataContext>
+        <vm:PlaybackViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <RelativePanel Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-        <TextBlock RelativePanel.AlignHorizontalCenterWithPanel="True"
-                   RelativePanel.AlignVerticalCenterWithPanel="True">
-        	Prev, play, next, info, seek, etc.
-        </TextBlock>
+        <Button x:Name="prevButton"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.AlignBottomWithPanel="True"
+                Width="{Binding ActualHeight, ElementName=playButton}"
+                Background="Transparent">
+            <fa:FontAwesome Icon="StepBackward"  FontSize="14"/>
+        </Button>
+        <Button x:Name="playButton"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                RelativePanel.RightOf="prevButton"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.AlignBottomWithPanel="True"
+                Width="{Binding ActualHeight, ElementName=playButton}"
+                Command="{Binding PlayPauseCommand}"
+                Background="Transparent">
+            <fa:FontAwesome Icon="{Binding PlayPauseIcon}"
+                            FontStyle="Normal"
+                            FontWeight="Normal"
+                            Width="32"
+                            Height="32"/>
+        </Button>
+        <Button x:Name="nextButton"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                RelativePanel.RightOf="playButton"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.AlignBottomWithPanel="True"
+                Width="{Binding ActualHeight, ElementName=playButton}"
+                Background="Transparent">
+            <fa:FontAwesome Icon="StepForward" FontStyle="Normal" FontWeight="Normal" FontSize="14"/>
+        </Button>
+        <TextBlock RelativePanel.AlignVerticalCenterWithPanel="True"
+                   RelativePanel.RightOf="nextButton"
+                   Margin="8"
+                   Text="{Binding CurrentlyPlaying}"/>
+        <WebView RelativePanel.AlignRightWithPanel="True"
+                 RelativePanel.AlignTopWithPanel="True"
+                 RelativePanel.AlignBottomWithPanel="True"
+                 Source="http://l.stoffi.io/youtube"
+                 Width="0"
+                 Name="youtubePlayer"/>
     </RelativePanel>
 </UserControl>

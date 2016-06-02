@@ -16,9 +16,10 @@ namespace Stoffi.Win.Tests.Unit
         [TestMethod]
         public async Task SubmitQuery_QueryPresent_CallsService()
         {
-            var service = new MockSearchService();
-            service.GetFilteredSongsAsyncDelegate = MockGetFilteredSongsAsync;
-            var viewModel = new MusicPageViewModel(service);
+            var search = new MockSearchService();
+            var playback = new MockPlaybackService();
+            search.GetFilteredSongsAsyncDelegate = MockGetFilteredSongsAsync;
+            var viewModel = new MusicPageViewModel(search, playback);
             viewModel.Query = "bob";
             await viewModel.SubmitQuery();
             Assert.AreEqual(2, viewModel.Results.Count);
@@ -29,9 +30,10 @@ namespace Stoffi.Win.Tests.Unit
         [TestMethod]
         public async Task SubmitQuery_NoQuery_DoesNothing()
         {
-            var service = new MockSearchService();
-            service.GetFilteredSongsAsyncDelegate = MockGetFilteredSongsAsync;
-            var viewModel = new MusicPageViewModel(service);
+            var search = new MockSearchService();
+            var playback = new MockPlaybackService();
+            search.GetFilteredSongsAsyncDelegate = MockGetFilteredSongsAsync;
+            var viewModel = new MusicPageViewModel(search, playback);
             viewModel.Query = "";
             await viewModel.SubmitQuery();
             Assert.AreEqual(0, viewModel.Results.Count);
@@ -41,9 +43,10 @@ namespace Stoffi.Win.Tests.Unit
         [TestMethod]
         public async Task GetSearchSuggestions_LongQuery_CallsService()
         {
-            var service = new MockSearchService();
-            service.GetSearchSuggestionsAsyncDelegate = MockGetSearchSuggestionsAsync;
-            var viewModel = new MusicPageViewModel(service);
+            var search = new MockSearchService();
+            var playback = new MockPlaybackService();
+            search.GetSearchSuggestionsAsyncDelegate = MockGetSearchSuggestionsAsync;
+            var viewModel = new MusicPageViewModel(search, playback);
             viewModel.Query = "lov";
             await viewModel.GetSearchSuggestions();
             Assert.AreEqual(2, viewModel.SearchSuggestions.Count);

@@ -7,6 +7,9 @@ using Template10.Common;
 using Microsoft.Practices.Unity;
 using Stoffi.Core.Services;
 using Windows.ApplicationModel;
+using Windows.UI.ViewManagement;
+using System;
+using Windows.Foundation.Metadata;
 
 namespace Stoffi.Win
 {
@@ -24,9 +27,11 @@ namespace Stoffi.Win
             #region IoC
             var settingsStorage = new SettingsStorage();
             settingsStorage.LargeSettings.Add("NavigationState");
-            Container.Instance.RegisterInstance<SettingsStorage>(settingsStorage);
+            Container.Instance.RegisterInstance<SettingsStorage>(settingsStorage, new ContainerControlledLifetimeManager());
+            Container.Instance.RegisterType<IMediaService, MediaService>(new ContainerControlledLifetimeManager());
             Container.Instance.RegisterType<ISettingsStorage, SettingsStorage>();
             Container.Instance.RegisterType<ISettingsService, Core.Services.SettingsService>();
+            Container.Instance.RegisterType<IPlaybackService, PlaybackService>(new ContainerControlledLifetimeManager());
             #endregion
 
             #region App settings
@@ -67,11 +72,11 @@ namespace Stoffi.Win
             await Task.CompletedTask;
         }
 
-        public override Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunchActivated)
+        public override async Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunchActivated)
         {
             var settings = Container.Instance.Resolve<ISettingsService>();
-            settings.Write<string>("NavigationState", NavigationService.NavigationState);
-            return base.OnSuspendingAsync(s, e, prelaunchActivated);
+            await settings.Write<string>("NavigationState", NavigationService.NavigationState);
+            await base.OnSuspendingAsync(s, e, prelaunchActivated);
         }
     }
 }

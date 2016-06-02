@@ -7,8 +7,25 @@
     <x:Double x:Key="WideMinWidth">1200</x:Double>
 
     <Color x:Key="CustomColor">#FF008BF9</Color>
+    <Color x:Key="CustomColorHover">#88008BF9</Color>
     <Color x:Key="ContrastColor">White</Color>
     <Color x:Key="SystemAccentColor">#FF008BF9</Color>
+    
+    <Style TargetType="controls:CustomTitleBar">
+        <Setter Property="BackgroundColor" Value="{ThemeResource CustomColor}" />
+        <Setter Property="ButtonBackgroundColor" Value="{ThemeResource CustomColor}" />
+        <Setter Property="ButtonForegroundColor" Value="White" />
+        <Setter Property="ButtonHoverBackgroundColor" Value="{ThemeResource CustomColorHover}" />
+        <Setter Property="ButtonHoverForegroundColor" Value="White" />
+        <Setter Property="ButtonInactiveBackgroundColor" Value="{ThemeResource CustomColorHover}" />
+        <Setter Property="ButtonInactiveForegroundColor" Value="White" />
+        <Setter Property="ButtonPressedBackgroundColor" Value="{ThemeResource CustomColorHover}" />
+        <Setter Property="ButtonPressedForegroundColor" Value="White" />
+        <Setter Property="Extended" Value="False" />
+        <Setter Property="ForegroundColor" Value="White" />
+        <Setter Property="InactiveBackgroundColor" Value="{ThemeResource CustomColorHover}" />
+        <Setter Property="InactiveForegroundColor" Value="DimGray" />
+    </Style>
 
     <ResourceDictionary.ThemeDictionaries>
 

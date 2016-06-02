@@ -112,6 +112,16 @@
                   Margin="0"
                   ItemsSource="{Binding Results}"
                   Visibility="Collapsed">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:KeyBehavior Key="Enter">
+                    <Core:InvokeCommandAction Command="{Binding ActivateItemCommand}"
+                                              CommandParameter="{Binding SelectedItem, ElementName=resultList}"/>
+                </Behaviors:KeyBehavior>
+                <Core:EventTriggerBehavior EventName="DoubleTapped">
+                    <Core:InvokeCommandAction Command="{Binding ActivateItemCommand}"
+                                              CommandParameter="{Binding SelectedItem, ElementName=resultList}"/>
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <RelativePanel Margin="0,4">
@@ -123,7 +133,7 @@
                                         Margin="0,0,16,0" 
                                         Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"/>
                         <TextBlock x:Name="artistsLabel"
-                                   Text="{Binding Artists}"
+                                   Text="{Binding Artist}"
                                    RelativePanel.AlignTopWithPanel="True"
                                    FontSize="12"
                                    Foreground="{ThemeResource ListBoxDisabledForegroundThemeBrush}"

@@ -1,7 +1,6 @@
 using Template10.Mvvm;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
@@ -9,6 +8,7 @@ using System.Collections.ObjectModel;
 using Stoffi.Core.Models;
 using Stoffi.Core.Services;
 using Windows.UI.Xaml.Controls;
+using Microsoft.Practices.Unity;
 
 namespace Stoffi.Win.Logic.ViewModels
 {
@@ -48,6 +48,11 @@ namespace Stoffi.Win.Logic.ViewModels
         /// The service used for handling search requests.
         /// </summary>
         private readonly ISearchService searchService;
+
+        /// <summary>
+        /// Service used for managing playback.
+        /// </summary>
+        private readonly IPlaybackService playbackService;
         
         /// <summary>
         /// The maximum number of search suggestions to show.
@@ -59,33 +64,45 @@ namespace Stoffi.Win.Logic.ViewModels
         /// <summary>
         /// Create an instance of the class.
         /// </summary>
-        public MusicPageViewModel() : this(new SearchService())
+        public MusicPageViewModel() :
+            this(new SearchService(), Container.Instance.Resolve<IPlaybackService>())
+        {
+        }
+
+        /// <summary>
+        /// Create an instance of the class.
+        /// </summary>
+        public MusicPageViewModel(IPlaybackService playbackService) : this(new SearchService(), playbackService)
         {
         }
 
         /// <summary>
         /// Create a new instance of the class.
         /// </summary>
-        public MusicPageViewModel(ISearchService searchService)
+        public MusicPageViewModel(ISearchService searchService, IPlaybackService playbackService)
         {
             this.searchService = searchService;
+            this.playbackService = playbackService;
 			Results = new ObservableCollection<Song>();
             SearchSuggestions = new ObservableCollection<string>();
             this.SuggestionsCommand = new DelegateCommand<AutoSuggestBoxTextChangedEventArgs>(async (eventArgs) =>
             {
                 if (eventArgs.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
                 {
+                    // BUG: crash when server is unreachable
                     await GetSearchSuggestions();
                 }
             });
             this.SearchCommand = new DelegateCommand<AutoSuggestBoxQuerySubmittedEventArgs>(async (eventArgs) =>
             {
+                // BUG: crash when server is unreachable
                 await SubmitQuery();
             });
             this.SuggestionChosenCommand = new DelegateCommand<AutoSuggestBoxSuggestionChosenEventArgs>(async (eventArgs) =>
             {
                 await SubmitQuery();
             });
+            this.ActivateItemCommand = new DelegateCommand<object>(PlayItem);
         }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
@@ -118,6 +135,11 @@ namespace Stoffi.Win.Logic.ViewModels
         /// The command for requesting a list of search query suggestions.
         /// </summary>
         public DelegateCommand<AutoSuggestBoxTextChangedEventArgs> SuggestionsCommand { get; set; }
+
+        /// <summary>
+        /// Command for when the user double clicks/taps or otherwise activates an item.
+        /// </summary>
+        public DelegateCommand<object> ActivateItemCommand { get; set; }
 
         /// <summary>
         /// The search query.
@@ -191,6 +213,19 @@ namespace Stoffi.Win.Logic.ViewModels
             foreach (var suggestion in suggestions)
             {
                 SearchSuggestions.Add(suggestion.Value);
+            }
+        }
+
+        /// <summary>
+        /// Plays a given song
+        /// </summary>
+        /// <param name="song">Song to play</param>
+        private void PlayItem(object song)
+        {
+            if (song != null && song is Song)
+            {
+                playbackService.Song = song as Song;
+                playbackService.State = Core.Enums.PlaybackState.Playing;
             }
         }
     }
