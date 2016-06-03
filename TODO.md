@@ -1,8 +1,0 @@
-- Coded UI tests
-- Dashboard
-- Playlists
-- Music
-- Timeline
-- Settings
-- About
-- Privacy

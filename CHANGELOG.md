@@ -5,12 +5,15 @@ This change log is based on [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
-- Universal Windows app
+- Music page with search functionality.
+- Audio playback of YouTube videos.
+- Dark theme.
+- Roaming settings between devices.
 
 ### Removed
 - Windows 7 player
 
-## 1.50 (han) - YANKED
+## 1.50.0 (han) - YANKED
 ### Added
 - Stream from [Jamendo](http://jamendo.com).
 - New views: icon grid, content, icon list.
